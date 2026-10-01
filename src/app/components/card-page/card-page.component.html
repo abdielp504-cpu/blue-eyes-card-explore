@@ -1,0 +1,23 @@
+<main class="card-page">
+  @let pageState = state();
+  @switch (pageState.status) {
+    @case ('loading') {
+      <a class="back-link" routerLink="/">← Volver al buscador</a>
+      <div class="status-panel" role="status" aria-live="polite">
+        <span class="loader"></span>
+        <p>Consultando la carta...</p>
+      </div>
+    }
+    @case ('error') {
+      <a class="back-link" routerLink="/">← Volver al buscador</a>
+      <section class="status-panel" role="alert">
+        <h1>No se pudo cargar la carta</h1>
+        <p>{{ pageState.message }}</p>
+        <a class="back-button" routerLink="/">Volver al buscador</a>
+      </section>
+    }
+    @case ('success') {
+      <app-card-detail [card]="pageState.card" />
+    }
+  }
+</main>

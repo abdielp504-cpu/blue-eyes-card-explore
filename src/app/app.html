@@ -1,0 +1,28 @@
+<div class="page-shell">
+  <header class="topbar">
+    <a class="brand" routerLink="/" aria-label="Blue-Eyes Card Explorer, inicio">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M4 22.5 16 5l12 17.5H4Z" />
+          <path d="m10 22.5 6-9 6 9M16 5v8.5" />
+        </svg>
+      </span>
+      <span class="brand-name">CARD<span>INDEX</span></span>
+    </a>
+    <div class="topbar-note"><span class="live-dot"></span> CONECTADO A YGOPRODECK</div>
+    <nav class="topbar-links" aria-label="Navegación principal">
+      <a routerLink="/">Buscar cartas</a>
+      <a routerLink="/blue-eyes">Blue-Eyes</a>
+      <a class="source-link" href="https://ygoprodeck.com" target="_blank" rel="noreferrer">
+        Fuente <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+  </header>
+
+  <router-outlet />
+
+  <footer class="footer">
+    <span>CARDINDEX <span class="footer-separator">/</span> EXPLORADOR DE CARTAS</span>
+    <span>INFORMACIÓN SERVIDA EN VIVO POR <a href="https://ygoprodeck.com" target="_blank" rel="noreferrer">YGOPRODECK</a></span>
+  </footer>
+</div>

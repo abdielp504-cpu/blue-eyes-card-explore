@@ -1,0 +1,62 @@
+<main class="search-page">
+  <app-explorer-hero [imageUrl]="heroImageUrl()">
+    <app-search (stateChanged)="onSearchStateChanged($event)" />
+  </app-explorer-hero>
+
+  <section class="collection" aria-labelledby="collection-title">
+    <div class="collection-heading">
+      <div>
+        <p class="section-kicker">EL CATÁLOGO</p>
+        <h2 id="collection-title">
+          @if (!searchTerm() || searchTerm().toLowerCase() === 'blue-eyes') {
+            Busca cartas <em>Yu-Gi-Oh!</em>
+          } @else {
+            Resultados de <em>“{{ searchTerm() }}”</em>
+          }
+        </h2>
+      </div>
+      @if (state() === 'success') {
+        <p class="result-count">
+          <span>{{ cards().length.toString().padStart(2, '0') }}</span> CARTAS ENCONTRADAS
+        </p>
+      }
+    </div>
+
+    @if (state() === 'loading') {
+      <div class="status-panel" role="status" aria-live="polite">
+        <span class="loader"></span>
+        <p>Consultando el archivo de cartas...</p>
+      </div>
+    } @else if (state() === 'idle') {
+      <div class="status-panel" role="status">
+        <p>Escribe al menos 2 letras para buscar.</p>
+      </div>
+    } @else if (state() === 'error') {
+      <div class="status-panel status-error" role="alert">
+        <span class="status-symbol">!</span>
+        <h3>No se pudo completar la consulta</h3>
+        <p>{{ errorMessage() }}</p>
+        <button class="retry-button" type="button" (click)="retry()">
+          Intentar de nuevo <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    } @else if (state() === 'empty') {
+      <div class="status-panel">
+        <span class="status-symbol">⌕</span>
+        <h3>No encontramos cartas</h3>
+        <p>Prueba con otro nombre o vuelve a la colección Blue-Eyes.</p>
+        <button class="retry-button" type="button" (click)="showBlueEyesCards()">
+          Volver a Blue-Eyes <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    } @else {
+      <div class="card-grid">
+        @for (card of cards(); track card.id; let index = $index) {
+          <div class="card-entry" [style.--card-index]="index">
+            <app-card [card]="card" (selected)="onCardSelected($event)" />
+          </div>
+        }
+      </div>
+    }
+  </section>
+</main>

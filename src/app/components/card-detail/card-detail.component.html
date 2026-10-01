@@ -1,0 +1,41 @@
+<main class="detail-page">
+  <a class="back-link" routerLink="/" aria-label="Regresar al buscador">
+    <span aria-hidden="true">←</span> Regresar
+  </a>
+  <section class="detail-panel" [attr.aria-label]="'Detalles de ' + card().name">
+    <div class="detail-image">
+      @if (card().card_images[0]; as image) {
+        <img [src]="image.image_url" [alt]="card().name" />
+      } @else {
+        <span>Imagen no disponible</span>
+      }
+    </div>
+    <div class="detail-copy">
+      <p class="eyebrow">Registro de carta · #{{ card().id }}</p>
+      <h2>{{ card().name }}</h2>
+      <p class="type-line">{{ card().type }} · {{ card().race }}</p>
+      <div class="stat-list">
+        <div class="stat-row"><span>Atributo</span><strong>{{ card().attribute ?? '—' }}</strong></div>
+        <div class="stat-row"><span>Nivel</span><strong>{{ card().level ?? '—' }}</strong></div>
+        <div class="stat-row"><span>ATK</span><strong>{{ card().atk ?? '—' }}</strong></div>
+        <div class="stat-row"><span>DEF</span><strong>{{ card().def ?? '—' }}</strong></div>
+        <div class="stat-row"><span>Arquetipo</span><strong>{{ card().archetype ?? '—' }}</strong></div>
+      </div>
+      <div class="description">
+        <span class="description-label">Descripción</span>
+        <p>{{ card().desc }}</p>
+      </div>
+      @if (card().card_sets?.length) {
+        <div class="sets">
+          <span class="description-label">Ediciones</span>
+          @for (set of card().card_sets; track $index) {
+            <div class="set-row">
+              <span>{{ set.set_name }}</span>
+              <span>{{ set.set_rarity }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+</main>

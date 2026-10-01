@@ -1,0 +1,112 @@
+<main class="blue-eyes-page">
+  <app-explorer-hero eyebrow="ARQUETIPO" [imageUrl]="heroImageUrl()" />
+
+  <section class="collection" aria-labelledby="collection-title">
+    <div class="collection-heading">
+      <div>
+        <p class="section-kicker">EL CATÁLOGO</p>
+        <h2 id="collection-title">Blue-Eyes Collection</h2>
+      </div>
+      @if (state() === 'success') {
+        <p class="result-count">
+          <span>{{ filteredCards().length.toString().padStart(2, '0') }}</span> CARTAS ENCONTRADAS
+        </p>
+      }
+    </div>
+
+    @if (state() === 'success') {
+      <div class="expansion-filter">
+        <label for="expansion-select">Filtrar por expansión</label>
+        <select
+          id="expansion-select"
+          [value]="selectedExpansion()"
+          (change)="onExpansionChange($event)"
+        >
+          <option value="">Todas</option>
+          @for (expansion of expansions(); track expansion) {
+            <option [value]="expansion">{{ expansion }}</option>
+          }
+        </select>
+      </div>
+    }
+
+    @if (state() === 'loading') {
+      <div class="status-panel" role="status" aria-live="polite">
+        <span class="loader"></span>
+        <p>Consultando el archivo de cartas...</p>
+      </div>
+    } @else if (state() === 'error') {
+      <div class="status-panel status-error" role="alert">
+        <span class="status-symbol">!</span>
+        <h3>No se pudo cargar la colección</h3>
+        <p>{{ errorMessage() }}</p>
+        <button class="retry-button" type="button" (click)="retry()">
+          Intentar de nuevo <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    } @else if (state() === 'empty') {
+      <div class="status-panel">
+        <span class="status-symbol">⌕</span>
+        <h3>No encontramos cartas</h3>
+        <p>No hay cartas del arquetipo Blue-Eyes para mostrar.</p>
+      </div>
+    } @else {
+      <div class="card-grid">
+        @for (card of filteredCards(); track card.id; let index = $index) {
+          <div class="card-entry" [style.--card-index]="index">
+            <app-card [card]="card" (selected)="onCardSelected($event)" />
+          </div>
+        }
+      </div>
+    }
+
+    @if (selectedCard(); as selected) {
+      <section #impressions class="impressions" aria-labelledby="impressions-title">
+        <div class="impressions-heading">
+          <div>
+            <p class="section-kicker">HISTORIAL DE IMPRESIONES</p>
+            <h3 id="impressions-title">{{ selected.name }}</h3>
+          </div>
+          <button
+            class="close-impressions"
+            type="button"
+            aria-label="Cerrar impresiones"
+            (click)="selectedCard.set(null)"
+          >
+            ×
+          </button>
+        </div>
+        @if (selected.card_sets?.length) {
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Expansión</th>
+                  <th scope="col">Código</th>
+                  <th scope="col">Rareza</th>
+                  <th scope="col">Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (impression of selected.card_sets; track $index) {
+                  <tr
+                    [class.highlighted]="
+                      selectedExpansion() !== '' && impression.set_name === selectedExpansion()
+                    "
+                  >
+                    <td>{{ impression.set_name }}</td>
+                    <td>{{ impression.set_code }}</td>
+                    <td>{{ impression.set_rarity }}</td>
+                    <td>{{ impression.set_price }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <p class="no-impressions">Esta carta no tiene impresiones registradas.</p>
+        }
+      </section>
+    }
+  </section>
+</main>

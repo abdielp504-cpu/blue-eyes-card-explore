@@ -1,0 +1,22 @@
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-copy">
+    <p class="eyebrow">
+      <span>{{ eyebrow() }}</span><span class="eyebrow-line"></span> VOL. 01
+    </p>
+    <h1>El poder<br />de los <em>ojos azules.</em></h1>
+    <p class="hero-description">
+      Una mirada a la leyenda. Explora cartas, variantes y ediciones del dragón blanco de ojos azules.
+    </p>
+    <ng-content />
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    @if (imageUrl(); as image) {
+      <img class="hero-card-image" [src]="image" alt="" />
+    }
+    <div class="hero-art-note"><span>ARCHIVO EN VIVO</span><span>DATOS DE YGOPRODECK</span></div>
+  </div>
+  <div class="hero-caption"><span>01</span><span>EL DRAGÓN BLANCO DE OJOS AZULES</span></div>
+</section>

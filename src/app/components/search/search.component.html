@@ -1,0 +1,30 @@
+<form class="search-form" (submit)="$event.preventDefault(); submitSearch()">
+  <label class="search-label" for="card-search">Busca en la colección</label>
+  <div class="search-field">
+    <span class="search-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="10.8" cy="10.8" r="6.8" />
+        <path d="m16 16 4.3 4.3" />
+      </svg>
+    </span>
+    <input
+      id="card-search"
+      type="search"
+      autocomplete="off"
+      placeholder="Nombre de una carta..."
+      [formControl]="searchControl"
+    />
+    @if (searchControl.value) {
+      <button
+        class="clear-button"
+        type="button"
+        aria-label="Limpiar búsqueda"
+        (click)="clearSearch()"
+      >
+        Limpiar
+      </button>
+    } @else {
+      <span class="search-hint">Enter ↵</span>
+    }
+  </div>
+</form>

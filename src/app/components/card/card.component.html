@@ -1,0 +1,26 @@
+<button
+  class="card-tile"
+  type="button"
+  [attr.aria-label]="'Ver detalles de ' + card.name"
+  (click)="selected.emit(card)"
+>
+  <span class="card-art">
+    @if (card.card_images[0]; as image) {
+      <img [src]="image.image_url" [alt]="card.name" loading="lazy" />
+    } @else {
+      <span class="no-image">Imagen no disponible</span>
+    }
+    <span class="art-index">#{{ card.id }}</span>
+    <span class="view-card">Ver ficha <span aria-hidden="true">↗</span></span>
+  </span>
+  <span class="card-copy">
+    <span class="card-kind">{{ card.type }}</span>
+    <span class="card-name">{{ card.name }}</span>
+    <span class="card-stats">
+      <span class="attribute">{{ card.attribute ?? '—' }}</span>
+      <span>NIV <b>{{ card.level ?? '—' }}</b></span>
+      <span>ATK <b>{{ card.atk ?? '—' }}</b></span>
+      <span>DEF <b>{{ card.def ?? '—' }}</b></span>
+    </span>
+  </span>
+</button>
