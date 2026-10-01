@@ -1,20 +1,44 @@
 # Blue-Eyes Card Explorer
 
-Explorador de cartas de Yu-Gi-Oh! hecho con Angular y TypeScript. La colección y las búsquedas consultan directamente la API pública de YGOPRODeck; no se usan datos locales.
+Examen práctico – Aplicaciones Web (Angular)
 
-## Requisitos
+Carrera: Ingeniería en Desarrollo y Gestión de Software
 
-- Node.js 20.19 o posterior
-- npm
+**Integrante:** Abdiel Farid Pech Tec
 
-## Ejecutar
+(Realizado de forma individual)
+
+## Cómo ejecutarlo
+
+Requisitos: Node.js 20.19 o posterior y npm.
 
 ```bash
 npm install
-npm start
+ng serve
 ```
 
-Abre la URL que muestra Angular CLI (por defecto, `http://localhost:4200`).
+Abre [http://localhost:4200](http://localhost:4200).
+
+## Qué hace
+
+Buscar carta → Consultar API → Mostrar resultados → Ver características → Explorar Blue-Eyes → Consultar impresiones → Filtrar por expansión
+
+La información de cartas, expansiones e impresiones se obtiene en tiempo real de la API pública de YGOPRODeck.
+
+## Estructura
+
+- `YugiohService`: toda la comunicación HTTP con la API de YGOPRODeck.
+- `SearchComponent` / `SearchPageComponent`: buscador reactivo con RxJS y página de resultados.
+- `CardComponent`: tarjeta reutilizable para mostrar resultados.
+- `CardPageComponent` / `CardDetailComponent`: consulta y presentación del detalle de una carta.
+- `BlueEyesComponent`: colección, expansiones, filtro e impresiones.
+- `ExplorerHeroComponent`: hero compartido por las páginas principales.
+
+## Rutas
+
+- `/`: búsqueda de cartas por nombre.
+- `/card/89631139`: detalle de carta por ID.
+- `/blue-eyes`: colección del arquetipo Blue-Eyes.
 
 ## Verificar
 
@@ -22,24 +46,3 @@ Abre la URL que muestra Angular CLI (por defecto, `http://localhost:4200`).
 npm test -- --watch=false
 npm run build
 ```
-
-## Estructura
-
-- `src/app/services/yugioh.service.ts`: solicitudes HTTP a YGOPRODeck.
-- `src/app/models/card.model.ts`: interfaces de carta y respuesta de la API.
-- `src/app/components/search`: entrada de búsqueda reactiva.
-- `src/app/components/card`: tarjeta reutilizable para la cuadrícula.
-- `src/app/components/card-detail`: ficha completa de una carta.
-- `src/app/components/blue-eyes`: colección del arquetipo, con filtro de expansiones e historial de impresiones obtenidos de la API.
-- `src/app/components/search-page`: página de búsqueda y resultados.
-- `src/app/components/explorer-hero`: encabezado editorial compartido por las páginas de búsqueda y Blue-Eyes.
-- `src/app/components/card-page`: detalle de carta consultado por ID.
-- `src/app/utils/error-message.ts`: mensaje de error compartido por búsqueda y colección.
-
-La búsqueda espera 400 ms después de escribir, omite términos de menos de dos caracteres y cancela solicitudes anteriores cuando cambia el término.
-
-## Rutas
-
-- `/`: buscador por nombre parcial.
-- `/blue-eyes`: cartas del arquetipo `Blue-Eyes`.
-- `/card/:id`: detalle de una carta.
